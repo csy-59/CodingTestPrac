@@ -33,7 +33,8 @@ int f(vector<vector<int>>& land, int row, int colum)
             map[row][i] = v;
         }
     }
-    
+        
+    isVisited[row] = true;
     return map[row][colum];
 }
 
