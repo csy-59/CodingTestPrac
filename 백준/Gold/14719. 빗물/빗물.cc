@@ -14,8 +14,6 @@ int main()
     vector<int> walls(w, 0);
 
     int result = 0;
-    int wallStartIndex = -1;
-    int currentWallHeight = 0;
     for (int i = 0; i < w; ++i)
     {
         cin >> walls[i];
