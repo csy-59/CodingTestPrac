@@ -13,8 +13,9 @@ int Solution(int x, int y)
 		dp[x][y] = 1;
 		return dp[x][y];
 	}
-		
-	return Solution(x - 1, y) + Solution(x, y - 1);
+
+	dp[x][y] = Solution(x - 1, y) + Solution(x, y - 1);
+	return dp[x][y];
 }
 
 int main()
@@ -29,8 +30,8 @@ int main()
 	pair<int, int> s(0, 0);
 	if (k != 0)
 	{
-		s.first = k / m;
-		s.second = k % m - 1;
+		s.first = (k - 1) / m;
+		s.second = (k - 1) % m;
 		way = Solution(s.first, s.second);
 	}
 
