@@ -5,43 +5,43 @@
 using namespace std;
 
 vector<int> solution(vector<string> operations) {
-    vector<int> answer;
-    vector<int> vec;
+    vector<int> temp;
     
-    int vecSize = 0;
     for(int i = 0, size = operations.size(); i < size; ++i)
     {
-        string op = operations[i];
-        int num = stoi(op.substr(2));
+        char instruction = operations[i][0];
+        int num = stoi(operations[i].substr(2));
         
-        switch(op[0])
+        switch(instruction)
         {
             case 'I':
                 {
-                    ++vecSize;
-                    vec.push_back(num);
-                    sort(vec.begin(), vec.end());
+                    temp.push_back(num);
+                    sort(temp.begin(), temp.end());
                     break;
                 }
-                
             case 'D':
                 {
-                    if(vecSize <= 0)
-                        continue;
+                    if(temp.empty() == true) break;
                     
-                    if(num > 0) vec.erase(vec.end() - 1);
-                    else if(num < 0) vec.erase(vec.begin());
-                    --vecSize;
+                    if(num == -1) temp.erase(temp.begin());
+                    else if(num == 1) temp.pop_back();
+                    
                     break;
                 }
         }
     }
     
-    if(vecSize == 0) { answer.push_back(0); answer.push_back(0);}
+    vector<int> answer;
+    if(temp.size() == 0)
+    {
+        answer.push_back(0);
+        answer.push_back(0);
+    }
     else
     {
-        answer.push_back(vec[vecSize - 1]);
-        answer.push_back(vec[0]);
+        answer.push_back(temp[temp.size() - 1]);
+        answer.push_back(temp[0]);
     }
     
     return answer;
