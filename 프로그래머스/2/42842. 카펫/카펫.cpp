@@ -1,22 +1,23 @@
 #include <string>
 #include <vector>
-#include <cmath>
 
 using namespace std;
 
 vector<int> solution(int brown, int yellow) {
-    vector<int> ans;
+    vector<int> answer;
     
-    int sqY = sqrt(yellow);
-    for(int i = 1; i < sqY + 1; ++i)
+    int sumOfHnW = brown / 2 + 2;
+    
+    for(int i = 3; i <= sumOfHnW - 3; ++i) // 최소 길이는 3
     {
-        if(yellow % i == 0 && (i + yellow / i) * 2 + 4 == brown)
+        int h = i, w = sumOfHnW - h;
+        if(yellow == (h - 2) * (w - 2))
         {
-            ans.push_back(yellow / i + 2);
-            ans.push_back(i + 2);
-            return ans;
+            answer.push_back(w);
+            answer.push_back(h);
+            return answer;
         }
     }
     
-    return ans;
+    return answer;
 }
