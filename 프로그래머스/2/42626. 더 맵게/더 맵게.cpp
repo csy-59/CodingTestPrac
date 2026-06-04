@@ -1,28 +1,29 @@
 #include <string>
 #include <vector>
 #include <queue>
-#include <iostream>
 
 using namespace std;
 
 int solution(vector<int> scoville, int K) {
     int answer = 0;
     
-    priority_queue<int, vector<int>, greater<int>> q;
-    for(int i = 0, size = scoville.size(); i < size; ++i)
+    int foodCount = scoville.size();
+    priority_queue<int, vector<int>, greater<int>> foods;
+    
+    for(int i = 0; i < foodCount; ++i)
     {
-        q.push(scoville[i]);
+        foods.push(scoville[i]);
     }
     
-    while(q.top() < K)
+    while(foods.empty() == false && foods.top() < K)
     {
-        if(q.size() < 2) return -1;
+        int first = foods.top(); foods.pop();
         
-        int a = q.top(); q.pop();
-        int b = q.top(); q.pop();
+        if(foods.empty() == true) return -1; // 변환 가능한 음식이 남아있지 않음
         
-        q.push(a + b * 2);
+        int second = foods.top(); foods.pop();
         
+        foods.push(first + second * 2);
         ++answer;
     }
     
