@@ -1,16 +1,17 @@
 #include<string>
-#include<stack>
+#include <iostream>
 
 using namespace std;
 
 bool solution(string s)
-{
-    stack<char> st;
-    for(int i = 0, size = s.size(); i < size; ++i)
+{    
+    int openCount = 0;
+    for(int i = 0, length = s.length(); i < length; ++i)
     {
-        if(s[i] == '(') st.push(s[i]);
-        else if(st.empty() == true) return false;
-        else st.pop();
+        if(s[i] == '(') ++openCount;
+        else if(openCount > 0) --openCount;
+        else return false;
     }
-    return st.empty();
+
+    return openCount == 0;
 }
