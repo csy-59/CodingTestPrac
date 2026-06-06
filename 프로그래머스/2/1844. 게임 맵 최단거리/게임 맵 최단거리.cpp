@@ -1,63 +1,62 @@
-#include <vector>
+#include<vector>
 #include <queue>
-#include <iostream>
-
 using namespace std;
 
-class point{
-public: 
-    int x; int y; int steps;
-    point() { x = y = steps = 0; }
-    point(int x, int y): x(x), y(y), steps(0) {}
-    point(int x, int y, int s): x(x), y(y), steps(s) {}
+int dir[4][2] = 
+{ 
+    1, 0,
+    0, 1,
+    -1, 0,
+    0, -1
 };
 
-// 이동 방향
-int dir[4][2] = {
-    {0, 1},
-    {0, -1},
-    {1, 0},
-    {-1, 0}
+struct MovePos
+{
+    int x, y;
+    int dist;
+    
+    MovePos() { x = y = dist = 0; }
+    MovePos(int x, int y): x(x), y(y) { dist = 0; }
 };
-
 
 int solution(vector<vector<int> > maps)
 {
-    queue<point> q;
-    q.push(point(0, 0));
-    
     int n = maps.size();
     int m = maps[0].size();
     
-    vector<vector<bool>> isVisited(n, vector<bool>(m));
+    queue<MovePos> q;
+    
+    MovePos start(0, 0);
+    start.dist = 1;
+    maps[0][0] = 0;
+    
+    q.push(start);
     
     while(q.empty() == false)
     {
-        point p = q.front(); q.pop();
-        ++p.steps;
+        MovePos p = q.front(); q.pop();
         
-        // 목표 지점 도착
-        if(p.x + 1 == n && p.y + 1 == m) 
-            return p.steps;
+        if(p.x == n - 1 && p.y == m - 1)
+            return p.dist;
         
-        // 방향 탐색
-        for(int i = 0 ; i < 4; ++i)
+        for(int i = 0; i < 4; ++i)
         {
             int newX = p.x + dir[i][0];
             int newY = p.y + dir[i][1];
             
-            // 범위 조정
             if(newX < 0 || newX >= n ||
               newY < 0 || newY >= m)
                 continue;
             
-            // 조건 판정
-            if(isVisited[newX][newY] == false &&
-              maps[newX][newY] == 1)
-            {
-                isVisited[newX][newY] = true;
-                q.push(point(newX, newY, p.steps));
-            }
+            if(maps[newX][newY] != 1) // 벽 or 이미 방문함
+                continue; 
+            
+            maps[newX][newY] = 0; // 방문 처리
+            
+            MovePos newPos(newX, newY);
+            newPos.dist = p.dist + 1;
+            
+            q.push(newPos);
         }
     }
     
