@@ -6,7 +6,7 @@
 using namespace std;
 
 vector<int> solution(vector<int> progresses, vector<int> speeds) {
-    vector<int> answer;
+    vector<int> ans;
     
     int jobCount = progresses.size();
     for(int i = 0; i < jobCount; ++i)
@@ -24,8 +24,8 @@ vector<int> solution(vector<int> progresses, vector<int> speeds) {
             else
                 preJobDone = false;
         }
-        answer.push_back(finCount);
+        ans.push_back(finCount);
     }
     
-    return answer;
+    return ans;
 }
