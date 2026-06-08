@@ -24,17 +24,17 @@ int solution(vector<vector<int> > maps)
     int n = maps.size();
     int m = maps[0].size();
     
-    queue<MovePos> q;
+    queue<MovePos> que;
     
     MovePos start(0, 0);
     start.dist = 1;
     maps[0][0] = 0;
     
-    q.push(start);
+    que.push(start);
     
-    while(q.empty() == false)
+    while(que.empty() == false)
     {
-        MovePos p = q.front(); q.pop();
+        MovePos p = que.front(); que.pop();
         
         if(p.x == n - 1 && p.y == m - 1)
             return p.dist;
@@ -56,7 +56,7 @@ int solution(vector<vector<int> > maps)
             MovePos newPos(newX, newY);
             newPos.dist = p.dist + 1;
             
-            q.push(newPos);
+            que.push(newPos);
         }
     }
     
