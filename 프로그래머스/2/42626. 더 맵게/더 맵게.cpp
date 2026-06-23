@@ -7,25 +7,29 @@ using namespace std;
 int solution(vector<int> scoville, int K) {
     int answer = 0;
     
-    int foodCount = scoville.size();
-    priority_queue<int, vector<int>, greater<int>> foods;
-    
-    for(int i = 0; i < foodCount; ++i)
+    priority_queue<int,
+        vector<int>,
+        greater<int>> q;
+    for(int i = 0, size = scoville.size(); i < size; ++i)
     {
-        foods.push(scoville[i]);
+        q.push(scoville[i]);
     }
     
-    while(foods.empty() == false && foods.top() < K)
+    while(q.empty() == false)
     {
-        int first = foods.top(); foods.pop();
+        int first = q.top(); q.pop();
         
-        if(foods.empty() == true) return -1; // 변환 가능한 음식이 남아있지 않음
+        if(first >= K)
+            return answer;
         
-        int second = foods.top(); foods.pop();
+        if(q.empty() == true)
+            return -1;
         
-        foods.push(first + second * 2);
+        int sec = q.top(); q.pop();
+        
+        q.push(first + sec * 2);
         ++answer;
     }
     
-    return answer;
+    return -1;
 }
